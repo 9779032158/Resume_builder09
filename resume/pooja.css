@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image:light pink ;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color:black;
+  }
+  form {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    background:#ccc;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: bold;
+  }
+  input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  input[type="file"] {
+    margin-top: 8px;
+  }
+  button {
+    background-color: lightcoral;
+  
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  button:hover {
+    background-color: lightcoral;
+  }
+
+  /* Resume output styles */
+  #resume {
+    max-width: 600px;
+    margin: 0 auto;
+    background:white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: none;
+    position: relative;
+  }
+  #resume h2 {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: pink;
+  }
+  #resume p {
+    margin: 5px 0;
+  }
+  #resume .section {
+    margin-bottom: 20px;
+  }
+  #res-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    position: absolute;
+    top: 30px;
+    right: 40px;
+  }
+
+  #download-btn {
+    display: none;
+    max-width: 600px;
+    margin: 10px auto 40px;
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #28a745;
+  }
+  #download-btn:hover {
+    background-color: #1e7e34;
+  }

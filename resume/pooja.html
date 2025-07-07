@@ -1,0 +1,148 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resume Builder with Photo & Download</title>
+
+
+<link rel="stylesheet" href="pooja.css">
+</head>
+<body>
+
+<h1> Resume Builder </h1>
+
+<form id="resume-form">
+  <label for="photo">Upload Profile Photo</label>
+  <input type="file" id="photo" accept="image/*" />
+
+  <label for="name">Full Name</label>
+  <input type="text" id="name" required placeholder="your answer " />
+
+  <label for="email">Email</label>
+  <input type="email" id="email" required placeholder="your answer" />
+
+  <label for="phone">Phone Number</label>
+  <input type="text" id="phone" placeholder="your answer" />
+
+  <label for="address">Address</label>
+  <input type="text" id="address" placeholder="your answer" />
+
+  <label for="summary"> Summary</label>
+  <textarea id="summary" placeholder=" yourself"></textarea>
+
+  <label for="education">Education</label>
+  <textarea id="education" placeholder="Degree, School, Year"></textarea>
+
+  <label for="experience">Work Experience</label>
+  <textarea id="experience" placeholder="Job Title, Company, "></textarea>
+
+  <label for="skills">Skills</label>
+  <textarea id="skills" placeholder="your answer"></textarea>
+
+  <button type="submit">Generate Resume</button>
+</form>
+
+<button id="download-btn">Download Resume as PDF</button>
+
+<div id="resume">
+  <img id="res-photo" src="" alt="Profile Photo" style="display:none;" />
+  <h2 id="res-name"></h2>
+  <p id="res-contact"></p>
+
+  <div class="section">
+    <h3> Summary</h3>
+    <p id="res-summary"></p>
+  </div>
+  <div class="section">
+    <h3>Education</h3>
+    <p id="res-education"></p>
+  </div>
+  <div class="section">
+    <h3>Work Experience</h3>
+    <p id="res-experience"></p>
+  </div>
+  <div class="section">
+    <h3>Skills</h3>
+    <p id="res-skills"></p>
+  </div>
+</div>
+
+<!-- html2pdf.js CDN for PDF download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+  // Image preview & load
+  document.getElementById('photo').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    const resPhoto = document.getElementById('res-photo');
+    if(file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        resPhoto.src = event.target.result;
+        resPhoto.style.display = 'block';
+      }
+      reader.readAsDataURL(file);
+    } else {
+      resPhoto.src = '';
+      resPhoto.style.display = 'none';
+    }
+  });
+
+  document.getElementById('resume-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Get input values
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const summary = document.getElementById('summary').value.trim();
+    const education = document.getElementById('education').value.trim();
+    const experience = document.getElementById('experience').value.trim();
+    const skills = document.getElementById('skills').value.trim();
+
+    // Fill resume fields
+    document.getElementById('res-name').textContent = name;
+    let contactText = email;
+    if(phone) contactText += " | " + phone;
+    if(address) contactText += " | " + address;
+    document.getElementById('res-contact').textContent = contactText;
+
+    document.getElementById('res-summary').textContent = summary || "N/A";
+    document.getElementById('res-education').textContent = education || "N/A";
+    document.getElementById('res-experience').textContent = experience || "N/A";
+    document.getElementById('res-skills').textContent = skills || "N/A";
+
+    // Show resume and download button
+    document.getElementById('resume').style.display = 'block';
+    document.getElementById('download-btn').style.display = 'inline-block';
+
+    // Scroll to resume
+    document.getElementById('resume').scrollIntoView({behavior: 'smooth'});
+  });
+
+  // Download PDF
+  document.getElementById('download-btn').addEventListener('click', function() {
+    const element = document.getElementById('resume');
+
+    // Before generating PDF, temporarily set display block if it's not, to ensure html2pdf renders correctly
+    element.style.display = 'block';
+
+    const opt = {
+      margin:       0.3,
+      filename:     'resume.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, scrollY: 0 }, // scrollY:0 to fix vertical clipping
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+      // After save, if you want, hide resume again (optional)
+      // element.style.display = 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
